@@ -1,0 +1,37 @@
+{%  extends 'dashboard/main.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-7">
+		<h5>MYBLOGS</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'createBlog'%}">Create New Blog</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Tittle</th>
+					<th>Creation Date</th>
+					<th>View</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for blog in blogs %}
+					<tr>
+						<td>{{blog.blog_tittle}}</td>
+						<td>{{blog.date_created}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'view_blog' blog.id %}">View</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_blog' blog.id %}">Delete</a></td>
+
+					</tr>
+				{% endfor %}
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

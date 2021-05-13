@@ -1,0 +1,21 @@
+{%  extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+			<form action="" method="POST">
+				{% csrf_token %}
+				<!-- {{form}} -->
+				<br>
+				<h2>Tittle:</h2><br>
+				{{form.blog_tittle|linebreaks}}
+				<br>
+				<h2>Content:</h2><br>
+				{{form.text}}
+				<br>
+
+				
+				<input type="submit" name="Submit">
+			</form>
+
+
+{% endblock %}

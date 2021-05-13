@@ -1,0 +1,23 @@
+{%  extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<br>
+
+   <div class="container">
+      {% for new, des, i, link in mylist %}
+              <h2>News Tittle:</h2> {{ new }}
+              {{ value|linebreaks }}
+              <a href="{{link}}" target="_blank">
+              <img src="{{ i }}" alt="">
+              </a>
+
+              <h4>description:</h4>{{ des }}
+              {{ value|linebreaks }}
+              <br><br>
+  
+      {% endfor %}
+    </div>
+
+
+{% endblock %}

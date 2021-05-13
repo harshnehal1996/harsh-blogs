@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Register </title>
+</head>
+<body>
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{form.as_p}}
+
+		<input type="submit" name="Create User">
+	</form>
+	{{form.errors}}
+	
+	<br>		
+	Already have an account? <a href="{% url 'login' %}">Login</a>
+	<br>
+	Forgot your password? <a href="{% url 'reset_password' %}">Reset Password</a>
+
+</body>
+</html>
