@@ -104,7 +104,10 @@ def list_blog(request):
 @login_required(login_url='login')
 @admin_redirect
 def view_blog(request, blog_id):
-	userblog = request.user.userblog_set.get(id=blog_id)
+	try:
+		userblog = request.user.userblog_set.get(id=blog_id)
+	except:
+		return HttpResponse('URL not found!')
 	# userblog = UserBlog.objects.get(id=blog_id)
 	context = {'userblog' : userblog}
 	return render(request, 'dashboard/blog.html', context)
@@ -131,10 +134,14 @@ def createBlog(request):
 @login_required(login_url='login')
 @admin_redirect
 def deleteBlog(request, pk):
-	blog = request.user.userblog_set.get(id=pk)
-	if request.method == 'POST':
-		blog.delete()
-		return redirect('list_blog')
+	try:
+		blog = request.user.userblog_set.get(id=pk)
+	
+		if request.method == 'POST':
+			blog.delete()
+			return redirect('list_blog')
+	except:
+		return HttpResponse('Error! Maybe this Blog is not available')
 
 	context = {'item':blog}
 	return render(request, 'dashboard/delete.html', context)
@@ -151,8 +158,11 @@ def adminBlog(request):
 @admin_only
 @api_view(['POST'])
 def adminUpdateBlog(request, blog_id):
-	blog = UserBlog.objects.get(id=blog_id)
-	serializer = BlogSerializer(instance=blog, data=request.data)
+	try:
+		blog = UserBlog.objects.get(id=blog_id)
+		serializer = BlogSerializer(instance=blog, data=request.data)
+	except:
+		return Response("Error! Maybe this Blog is not available")
 	
 	if serializer.is_valid():
 		serializer.save()
@@ -165,8 +175,11 @@ def adminUpdateBlog(request, blog_id):
 @admin_only
 @api_view(['POST'])
 def adminDeleteBlog(request, blog_id):
-	blog = UserBlog.objects.get(id=blog_id)
-	blog.delete()
+	try:
+		blog = UserBlog.objects.get(id=blog_id)
+		blog.delete()
+	except:
+		return Response("Error! Maybe this Blog is not available")
 	
 	return Response("Delete successful")
 
